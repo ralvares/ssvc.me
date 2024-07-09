@@ -1,4 +1,4 @@
-# Exploit & Vulnerability Intelligence Repository
+# Exploit Intelligence Repository
 
 ## Introduction
 
