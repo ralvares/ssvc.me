@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the Exploit & Vulnerability Intelligence repository! This open-source project aims to provide the community with the latest exploit information and streamline the process of vulnerability management. By integrating various sources of exploit data, this repository helps security enthusiasts and professionals stay up-to-date with emerging threats.
+Welcome to the Exploit Intelligence repository! This open-source project aims to provide the community with the latest exploit information and streamline the process of vulnerability management. By integrating various sources of exploit data, this repository helps security enthusiasts and professionals stay up-to-date with emerging threats.
 
 ### Exploit Intelligence and Prioritization
 
