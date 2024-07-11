@@ -94,21 +94,62 @@
         .info-list li span {
             font-weight: bold;
         }
+
+        .search-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .search-input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="header">
+        <h1>CVE Exploits</h1>
     </div>
     <div class="container">
-        <h1 id="cve-title">CVE</h1>
-        <div class="section" id="cve-details">
-            <h2>Description</h2>
+        <div class="search-container">
+            <input type="text" id="cve-input" class="search-input" placeholder="Enter CVE ID (e.g., CVE-2023-1234)">
+            <button onclick="searchCVE()" class="search-button">Search</button>
         </div>
-        <div class="section" id="exploit-container">
-            <h2>Exploits</h2>
+        <div id="content">
+            <h1 id="cve-title">CVE</h1>
+            <div class="section" id="cve-details">
+                <h2>Description</h2>
+            </div>
+            <div class="section" id="exploit-container">
+                <h2>Exploits</h2>
+            </div>
         </div>
     </div>
     <script>
+        function searchCVE() {
+            const cveInput = document.getElementById('cve-input').value;
+            const cvePattern = /^CVE-\d{4}-\d+$/;
+            if (cvePattern.test(cveInput)) {
+                window.location.href = `?cve=${cveInput}`;
+            } else {
+                alert('Please enter a valid CVE ID (e.g., CVE-2023-1234).');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const cveId = urlParams.get('cve');
@@ -127,7 +168,7 @@
                     })
                     .catch(error => console.error('Error fetching the JSON:', error));
             } else {
-                document.getElementById('cve-details').innerHTML = '<p>No CVE ID provided in the URL.</p>';
+                document.getElementById('content').style.display = 'none';
             }
         });
 
