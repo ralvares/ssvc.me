@@ -61,7 +61,7 @@ Fetches CVE data for the specified IDs.
 
 **Parameters:**
 
-- `ids`: Comma-separated list of CVE IDs (e.g., `CVE-2023-1234,CVE-2023-5678`)
+- `vulnIds`: Comma-separated list of CVE IDs (e.g., `CVE-2023-1234,CVE-2023-5678`)
 
 **Response:**
 
