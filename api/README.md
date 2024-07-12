@@ -32,7 +32,7 @@ This project is a FastAPI server that serves CVE data from a cloned GitHub repos
    Run the server using `uvicorn`:
 
    ```bash
-   uvicorn main:app --port 8080 --reload
+   uvicorn api:app --reload --port 8080
    ```
 
 2. **Access the API**
