@@ -1,4 +1,3 @@
-```markdown
 # CVE API Server
 
 This project is a FastAPI server that serves CVE data from a cloned GitHub repository. The server reads CVE JSON files from the local disk and returns the data via an API.
