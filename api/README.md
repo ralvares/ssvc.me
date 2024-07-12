@@ -15,6 +15,7 @@ This project is a FastAPI server that serves CVE data from a cloned GitHub repos
 
    ```bash
    git clone https://github.com/ralvares/ssvc.me.git
+   cd ssvc.me/api
    ```
 
 2. **Install Dependencies**
@@ -46,11 +47,10 @@ This project is a FastAPI server that serves CVE data from a cloned GitHub repos
 ## Project Structure
 
 ```
-project-directory/
-├── main.py              # FastAPI application
+ssvc.me/api/
+├── api.py              # FastAPI application
 ├── requirements.txt     # Python dependencies
 ├── README.md            # Project documentation
-└── ssvc.me/         # Cloned repository with CVE data
 ```
 
 ## API Endpoints

@@ -1,12 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from typing import List, Dict, Optional
+from typing import List, Optional
 import os
 import json
 
 app = FastAPI()
 
-REPO_PATH = './ssvc.me'
+REPO_PATH = '../'
+RHSA_MAPPING_PATH = 'rhsa-mappings.json'
 
 class CVECounts(BaseModel):
     public_exploit_count: Optional[int] = 0
@@ -30,7 +31,26 @@ class CVE(BaseModel):
 
 @app.get("/v1/vuln", response_model=List[CVE])
 async def get_cve(vulnIds: str):
-    cve_ids = vulnIds.split(',')
+    vuln_ids = vulnIds.split(',')
+    cve_ids = []
+    
+    # Load RHSA mappings if they exist
+    if os.path.exists(RHSA_MAPPING_PATH):
+        with open(RHSA_MAPPING_PATH, 'r') as file:
+            rhsa_mappings = json.load(file)
+    else:
+        rhsa_mappings = {}
+
+    # Check each ID and convert RHSA to CVE if necessary
+    for vuln_id in vuln_ids:
+        if vuln_id.startswith('RHSA-'):
+            if vuln_id in rhsa_mappings:
+                cve_ids.extend(rhsa_mappings[vuln_id])
+            else:
+                raise HTTPException(status_code=404, detail=f"RHSA {vuln_id} not found or has no associated CVEs")
+        else:
+            cve_ids.append(vuln_id)
+
     cve_data = []
 
     for cve_id in cve_ids:
