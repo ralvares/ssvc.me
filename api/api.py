@@ -33,7 +33,7 @@ class CVE(BaseModel):
 async def get_cve(vulnIds: str):
     vuln_ids = vulnIds.split(',')
     cve_ids = []
-    
+
     # Load RHSA mappings if they exist
     if os.path.exists(RHSA_MAPPING_PATH):
         with open(RHSA_MAPPING_PATH, 'r') as file:
@@ -62,6 +62,7 @@ async def get_cve(vulnIds: str):
                 cve_json = json.load(file)
                 # Ensure all required fields are present with default values if missing
                 cve_json.setdefault('reported_exploited', "")
+                cve_json['reported_exploited'] = str(cve_json['reported_exploited'])  # Ensure string type
                 cve_json.setdefault('exploit_maturity', "")
                 cve_json.setdefault('counts', {}).setdefault('public_exploit_count', 0)
                 cve_json.setdefault('timeline', {}).setdefault('nvd_published', "")
@@ -75,3 +76,4 @@ async def get_cve(vulnIds: str):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8080)
+

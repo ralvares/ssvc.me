@@ -38,10 +38,10 @@ This project is a FastAPI server that serves CVE data from a cloned GitHub repos
 
 2. **Access the API**
 
-   You can access the API at `http://localhost:8000`. For example, to get data for specific CVEs, you can use:
+   You can access the API at `http://localhost:8080`. For example, to get data for specific CVEs, you can use:
 
    ```
-   http://localhost:8000/v1/vuln?vulnIds=CVE-2023-1234,CVE-2023-5678,RHSA-2024:4389
+   http://localhost:8080/v1/vuln?vulnIds=CVE-2023-1234,CVE-2023-5678,RHSA-2024:4389
    ```
 
 ## Project Structure
