@@ -41,7 +41,7 @@ This project is a FastAPI server that serves CVE data from a cloned GitHub repos
    You can access the API at `http://localhost:8000`. For example, to get data for specific CVEs, you can use:
 
    ```
-   http://localhost:8000/v1/vuln?vulnIds=CVE-2023-1234,CVE-2023-5678
+   http://localhost:8000/v1/vuln?vulnIds=CVE-2023-1234,CVE-2023-5678,RHSA-2024:4389
    ```
 
 ## Project Structure
@@ -55,13 +55,13 @@ ssvc.me/api/
 
 ## API Endpoints
 
-### GET /cve
+### GET /v1/vuln
 
 Fetches CVE data for the specified IDs.
 
 **Parameters:**
 
-- `vulnIds`: Comma-separated list of CVE IDs (e.g., `CVE-2023-1234,CVE-2023-5678`)
+- `vulnIds`: Comma-separated list of CVE IDs or RHSA (e.g., `CVE-2023-1234,CVE-2023-5678,RHSA-2024:4389`)
 
 **Response:**
 
@@ -71,7 +71,7 @@ Returns a list of CVE data in JSON format.
 
 Request:
 ```
-GET /v1/vuln?vulnIds=CVE-2023-1234,CVE-2023-5678
+GET /v1/vuln?vulnIds=CVE-2023-1234,CVE-2023-5678,RHSA-2024:4389
 ```
 
 Response:
