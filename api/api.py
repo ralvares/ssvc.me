@@ -1,5 +1,7 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile
-from fastapi.responses import Response
+from fastapi import FastAPI, HTTPException, File, UploadFile, Request
+from fastapi.responses import Response, HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from typing import List, Optional
 import os
@@ -14,6 +16,12 @@ logger = logging.getLogger(__name__)
 
 REPO_PATH = '../'  # Adjust this path as needed
 RHSA_MAPPING_PATH = 'rhsa-mappings.json'  # Ensure this path is correct
+
+# Mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Optionally, if using templates
+templates = Jinja2Templates(directory="templates")
 
 class CVECounts(BaseModel):
     public_exploit_count: Optional[int] = 0
@@ -34,6 +42,13 @@ class CVE(BaseModel):
     counts: CVECounts = Field(default_factory=CVECounts)
     timeline: CVETimeline = Field(default_factory=CVETimeline)
     exploits: List[CVEExploit] = Field(default_factory=list)
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    """
+    Serve the main HTML page with the drag and drop interface.
+    """
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/v1/vuln", response_model=List[CVE])
 async def get_cve(vulnIds: str):
@@ -98,7 +113,7 @@ async def get_cve(vulnIds: str):
 
     return cve_data
 
-@app.post("/v1/report")
+@app.post("/v1/upload_csv")
 async def upload_csv(file: UploadFile = File(...)):
     # Acceptable content types for CSV files
     acceptable_types = [
