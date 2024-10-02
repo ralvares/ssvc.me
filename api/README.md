@@ -110,3 +110,67 @@ Response:
     }
 ]
 ```
+
+# RHACS Report Enhancements
+
+## Overview
+
+The **RHACS (Red Hat Advanced Cluster Security) Report Enhancement API** allows users to upload their ACS (Advanced Cluster Security) report CSV files and receive an enriched CSV output detailing the exploitability of each CVE or RHSA listed in their reports.
+
+## Features
+
+- **Upload ACS Report CSV:** Seamlessly upload your vulnerability reports in CSV format.
+- **Exploitability Analysis:** Obtain detailed information about the exploitability of each CVE or RHSA, including whether it's reported as exploited and its exploit maturity level.
+- **Automated Processing:** Utilize simple `curl` commands to interact with the API and automate report enhancements.
+
+## Usage
+
+### Uploading an ACS Report
+
+To enhance your ACS report with exploitability information, use the following `curl` command to upload your CSV file and receive the processed report:
+
+```bash
+curl -X POST "http://localhost:8080/v1/report" \    
+     -H "accept: text/csv" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@RHACS_Vulnerability_Report_demo-report_15_August_2024.csv;type=text/csv" > report.csv
+```
+
+### Example
+
+Assuming you have a vulnerability report named `RHACS_Vulnerability_Report_demo-report_15_August_2024.csv`, you can enhance it by running:
+
+```bash
+curl -X POST "http://localhost:8080/v1/report" \    
+     -H "accept: text/csv" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@RHACS_Vulnerability_Report_demo-report_15_August_2024.csv;type=text/csv" > report.csv
+```
+
+After execution, the `report.csv` file will contain additional columns:
+
+- **reported_exploited:** Indicates whether the vulnerability has been reported as exploited (`True` or `False`).
+- **exploit_maturity:** Shows the exploit maturity level, such as `Exploited`, `Weaponized`, `POC`, or `None`.
+
+### Explanation
+
+With the RHACS Report Enhancements:
+
+- **CVE Analysis:** For each CVE listed in your ACS report, the API provides details on whether it's been exploited and its maturity level.
+- **RHSA Analysis:** Similarly, for each RHSA, the API maps it to associated CVEs and provides exploitability information for each.
+- **Comprehensive Insights:** The enriched report helps in prioritizing vulnerabilities based on their exploitability, aiding in more effective security management.
+
+## API Endpoints
+
+### POST `/v1/report`
+
+- **Description:** Upload an ACS report CSV file and receive an enhanced CSV with exploitability information.
+- **Request:**
+  - **Content-Type:** `multipart/form-data`
+  - **Form Data:**
+    - `file`: The ACS report CSV file to upload.
+- **Response:**
+  - **Content-Type:** `text/csv`
+  - **Body:** The enhanced CSV file with additional columns for exploitability.
+
+
